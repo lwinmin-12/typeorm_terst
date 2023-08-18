@@ -10,17 +10,33 @@ const server = require("http").createServer(app);
 //require data
 
 createConnection({
-  type : "mysql",
-  database : "typeOrmTest",
-  username : "lwinmin",
-  password : "Asdffdsa-4580",
-  logging : true,
-  synchronize : true,
-  entities : [User]
-})
+  type: "mysql",
+  database: "typeOrmTest",
+  username: "lwinmin",
+  password: "Asdffdsa-4580",
+  logging: true,
+  synchronize: true,
+  entities: [User],
+});
 
 app.get("/api", (req: Request, res: Response, next: NextFunction) => {
   res.send("ok");
+});
+
+app.get("/api/users", async (req, res) => {
+  let data = await User.find();
+  res.json(data);
+});
+
+app.post("/api/users", async (req, res) => {
+  let data = await User.insert({
+    firstName: "Moh Moh",
+    lastName: "Aung Myint",
+    username: "Moh-11",
+    password: "chit-tal",
+  });
+
+  res.end()
 });
 
 //Error Routes
